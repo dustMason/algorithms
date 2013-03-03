@@ -4,49 +4,8 @@ require "bundler/setup"
 require "rainbow"
 require 'pry'
 
-# see https://github.com/mluckeneder/Union-Find-Ruby/blob/master/quick-union.rb
-class QuickFind
-  def initialize(n)
-    @ids = (0..n-1).to_a
-  end
-  def connected?(id1,id2)
-    @ids[id1] == @ids[id2]
-  end
-  def union(id1,id2)
-    id_1, id_2 = @ids[id1], @ids[id2]
-    @ids.map! {|i| (i == id_1) ? id_2 : i }
-  end
-end
-
-# see https://github.com/xajler/algorithms-rb/blob/master/lib/union-find/weighted_union.rb
-class WeightedUnion
-  attr_reader :ids, :sz
-  def initialize(range)
-    @ids = *(0..range)
-    @sz = Array.new(range + 1, 1)
-  end
-  def connected?(first_node, second_node)
-    root(first_node) == root(second_node)
-  end
-  def union(first_node, second_node)
-    i = root(first_node)
-    j = root(second_node)
-    if sz[i] < sz[j]
-      ids[i] = j
-      sz[j] += sz[i]
-    else
-      ids[j] = i
-      sz[i] += sz[j]
-    end
-  end
-  private
-  def root(index)
-    while index != ids[index]
-      index = ids[index]
-    end
-    index
-  end
-end
+require './quick_find.rb'
+require './weighted_union.rb'
 
 class Percolation
 
@@ -134,19 +93,6 @@ class Percolation
 
 end
 
-#t = Time.now
-#1000.times do
-  #perco = Percolation.new(20,WeightedUnion)
-  ##perco = Percolation.new(20,QuickFind)
-  #300.times do |n|
-    #perco.open((0..19).to_a.sample, (0..19).to_a.sample)
-  #end
-  #perco.print
-  #puts "-"*40
-  ##puts perco.percolates?
-#end
-#puts t - Time.now
-
 class PercolationStats
   def initialize(n,t,uf=WeightedUnion)
     #// perform T independent computational experiments on an N-by-N grid
@@ -183,6 +129,3 @@ class PercolationStats
     #// returns upper bound of the 95% confidence interval
   end
 end
-
-#stats = PercolationStats.new(20,1000)
-#puts stats.mean
