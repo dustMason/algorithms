@@ -134,24 +134,44 @@ class Percolation
 
 end
 
-t = Time.now
-1000.times do
-  perco = Percolation.new(20,WeightedUnion)
-  #perco = Percolation.new(20,QuickFind)
-  200.times do |n|
-    perco.open((0..19).to_a.sample, (0..19).to_a.sample)
-  end
+#t = Time.now
+#1000.times do
+  #perco = Percolation.new(20,WeightedUnion)
+  ##perco = Percolation.new(20,QuickFind)
+  #300.times do |n|
+    #perco.open((0..19).to_a.sample, (0..19).to_a.sample)
+  #end
   #perco.print
-  #puts perco.percolates?
-end
-puts t - Time.now
+  #puts "-"*40
+  ##puts perco.percolates?
+#end
+#puts t - Time.now
 
 class PercolationStats
-  def initialize(n,t)
+  def initialize(n,t,uf=WeightedUnion)
     #// perform T independent computational experiments on an N-by-N grid
+    sites = (0..(n*n)-1).to_a
+    @size = n
+    @times = t
+    @results = []
+    t.times do
+      sites_to_try = sites.sample(sites.size)
+      counter = 0
+      p = Percolation.new(n,uf)
+      until p.percolates?
+        site = sites_to_try.at(counter)
+        x = (site) % n
+        y = (site) / n # implied floor since we're using ints
+        counter += 1
+        p.open(x, y)
+      end
+      @results << counter
+    end
   end
   def mean
     #// sample mean of percolation threshold
+    avg = @results.reduce(&:+)/(@results.size * 1.0)
+    avg / (@size*@size)
   end
   def stddev
     #// sample standard deviation of percolation threshold
@@ -162,8 +182,7 @@ class PercolationStats
   def confidenceHi
     #// returns upper bound of the 95% confidence interval
   end
-  def main(args=["",""])
-    #// test client, described below
-  end
 end
 
+#stats = PercolationStats.new(20,1000)
+#puts stats.mean

@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     coderay (1.0.9)
+    googlecharts (1.6.8)
     method_source (0.8.1)
     pry (0.9.12)
       coderay (~> 1.0.5)
@@ -14,5 +15,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  googlecharts
   pry
   rainbow
