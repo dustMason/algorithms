@@ -66,12 +66,12 @@ class Percolation
     n = get_index(x,y)
     @open_sites[n] = true
 
-		top = get_index(x, y-1);
-		bot = get_index(x, y+1);
-		left = get_index(x-1, y);
-		right = get_index(x+1, y);
+    top = get_index(x, y-1);
+    bot = get_index(x, y+1);
+    left = get_index(x-1, y);
+    right = get_index(x+1, y);
 
-		#// Union to all open sites around site
+    #// Union to all open sites around site
     union(n, top) if (y != 0 && is_open?(x, y-1))
     union(n, bot) if (y != @width-1 && is_open?(x, y+1))
     union(n, left) if (x != 0 && is_open?(x-1, y))
@@ -149,23 +149,23 @@ end
 puts t - Time.now
 
 class PercolationStats
-   def initialize(n,t)
-     #// perform T independent computational experiments on an N-by-N grid
-   end
-   def mean
-     #// sample mean of percolation threshold
-   end
-   def stddev
-     #// sample standard deviation of percolation threshold
-   end
-   def confidenceLo
-     #// returns lower bound of the 95% confidence interval
-   end
-   def confidenceHi
-     #// returns upper bound of the 95% confidence interval
-   end
-   def main(args=["",""])
-     #// test client, described below
+  def initialize(n,t)
+    #// perform T independent computational experiments on an N-by-N grid
+  end
+  def mean
+    #// sample mean of percolation threshold
+  end
+  def stddev
+    #// sample standard deviation of percolation threshold
+  end
+  def confidenceLo
+    #// returns lower bound of the 95% confidence interval
+  end
+  def confidenceHi
+    #// returns upper bound of the 95% confidence interval
+  end
+  def main(args=["",""])
+    #// test client, described below
   end
 end
 
