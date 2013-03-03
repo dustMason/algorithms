@@ -50,8 +50,6 @@ end
 
 class Percolation
 
-  attr_reader :grid
-
   # create N-by-N grid, with all sites blocked
   def initialize(n,qf)
     @grid = qf.new (n*n)+2 # account for 2 virtual sites
