@@ -4,3 +4,4 @@ gem "rainbow"
 gem "pry"
 
 gem 'googlecharts'
+gem 'fruity'
